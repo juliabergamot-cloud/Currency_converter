@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: transparent;
+    }
+
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .widget {
+      width: 190px;
+      padding: 4px 6px 0;
+      box-sizing: border-box;
+      background: transparent;
+    }
+
+    .title {
+      text-align: center;
+      color: #860038;
+      font-size: 17px;
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.2px;
+      margin-bottom: 7px;
+    }
+
+    .divider {
+      width: 34px;
+      height: 1px;
+      background: #860038;
+      opacity: 0.45;
+      margin: 0 auto 11px;
+    }
+
+    .converter {
+      display: flex;
+      justify-content: center;
+    }
+
+    .converter > div {
+      width: 178px !important;
+      border: none !important;
+      background: transparent !important;
+    }
+
+    /* hides original exchangeratewidget heading */
+    .converter > div > div:first-child {
+      display: none !important;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="widget">
+
+    <div class="title">Currency Converter</div>
+    <div class="divider"></div>
+
+    <div class="converter">
+
+      <!-- Currency Converter Script - EXCHANGERATEWIDGET.COM -->
+      <div style="width:178px;">
+        <script
+          type="text/javascript"
+          src="https://www.exchangeratewidget.com/converter.php?l=en&f=USD&t=RUB&a=1&d=FFFFFF&n=FFFFFF&o=000000&v=1">
+        </script>
+      </div>
+      <!-- End of Currency Converter Script -->
+
+    </div>
+
+  </div>
+
+</body>
+</html>
