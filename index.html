@@ -16,7 +16,7 @@
     }
 
     .widget {
-      width: 210px;
+      width: 220px;
       padding: 4px 8px 0;
       box-sizing: border-box;
       background: transparent;
@@ -36,8 +36,8 @@
       width: 34px;
       height: 1px;
       background: #860038;
-      opacity: 0.45;
-      margin: 0 auto 12px;
+      opacity: 0.4;
+      margin: 0 auto 14px;
     }
 
     .converter {
@@ -60,16 +60,28 @@
 
     .converter input,
     .converter select {
+      width: 100% !important;
+      height: 34px !important;
+
       font-family: Georgia, "Times New Roman", serif !important;
       font-size: 14px !important;
+      line-height: 34px !important;
+
       color: #2f292c !important;
       background: #ffffff !important;
 
       border: 1px solid #bdb5b8 !important;
       border-radius: 5px !important;
 
-      padding: 3px 6px !important;
+      padding: 0 8px !important;
+      margin: 0 !important;
+
       box-shadow: none !important;
+      vertical-align: middle !important;
+    }
+
+    .converter select {
+      padding-right: 28px !important;
     }
   </style>
 </head>
@@ -95,205 +107,120 @@
 
   </div>
 
-
   <script>
-
     function applyStyles() {
-
       const converter = document.querySelector('.converter');
 
       if (!converter) return;
 
-
-      /* Everything → Notion-like serif */
-
+      /* Entire widget → serif */
       converter.querySelectorAll('*').forEach(el => {
-
-        el.style.fontFamily =
-          'Georgia, "Times New Roman", serif';
-
+        el.style.fontFamily = 'Georgia, "Times New Roman", serif';
       });
 
-
-
-      /* INPUTS + SELECTS */
-
+      /* Inputs and selects */
       converter.querySelectorAll('input, select').forEach(el => {
-
-        el.style.fontFamily =
-          'Georgia, "Times New Roman", serif';
-
+        el.style.fontFamily = 'Georgia, "Times New Roman", serif';
         el.style.fontSize = '14px';
 
+        el.style.height = '34px';
+        el.style.lineHeight = '34px';
+
         el.style.color = '#2f292c';
+        el.style.background = '#ffffff';
 
-        el.style.border =
-          '1px solid #bdb5b8';
+        el.style.border = '1px solid #bdb5b8';
+        el.style.borderRadius = '5px';
 
-        el.style.borderRadius =
-          '5px';
+        el.style.paddingTop = '0';
+        el.style.paddingBottom = '0';
+        el.style.paddingLeft = '8px';
+        el.style.paddingRight = '8px';
 
-        el.style.padding =
-          '3px 6px';
+        el.style.margin = '0';
+        el.style.boxShadow = 'none';
 
-        el.style.background =
-          '#ffffff';
-
-        el.style.boxShadow =
-          'none';
-
+        el.style.verticalAlign = 'middle';
       });
 
-
-
-      /* Amount / From / To */
-
+      /* Labels: Amount / From / To */
       converter
         .querySelectorAll('div, span, td, p, label')
         .forEach(el => {
-
-          const text =
-            el.textContent.trim();
+          const text = el.textContent.trim();
 
           if (
             text === 'Amount:' ||
             text === 'From' ||
             text === 'To'
           ) {
-
-            el.style.fontFamily =
-              'Georgia, "Times New Roman", serif';
-
-            el.style.fontSize =
-              '14px';
-
-            el.style.fontWeight =
-              '400';
-
-            el.style.color =
-              '#373033';
-
+            el.style.fontFamily = 'Georgia, "Times New Roman", serif';
+            el.style.fontSize = '14px';
+            el.style.fontWeight = '400';
+            el.style.lineHeight = '1.2';
+            el.style.color = '#40373b';
           }
-
         });
 
-
-
-      /* RATE NUMBER */
-
+      /* Exchange rate */
       let rate = null;
-
       let biggest = 0;
 
-
       converter
-        .querySelectorAll(
-          'div, span, td, p, strong, b, font'
-        )
+        .querySelectorAll('div, span, td, p, strong, b, font')
         .forEach(el => {
+          const text = el.textContent.trim();
 
-          const text =
-            el.textContent.trim();
-
-          if (
-            /^\d+([.,]\d+)?$/.test(text)
-          ) {
-
+          if (/^\d+([.,]\d+)?$/.test(text)) {
             const size =
-              parseFloat(
-                getComputedStyle(el).fontSize
-              ) || 0;
+              parseFloat(getComputedStyle(el).fontSize) || 0;
 
             if (size >= biggest) {
-
               biggest = size;
               rate = el;
-
             }
-
           }
-
         });
-
 
       if (rate) {
-
-        rate.style.color =
-          '#860038';
-
-        rate.style.fontFamily =
-          'Georgia, "Times New Roman", serif';
-
-        rate.style.fontSize =
-          '27px';
-
-        rate.style.fontWeight =
-          '700';
-
-        rate.style.lineHeight =
-          '1.15';
-
+        rate.style.color = '#860038';
+        rate.style.fontFamily = 'Georgia, "Times New Roman", serif';
+        rate.style.fontSize = '27px';
+        rate.style.fontWeight = '700';
+        rate.style.lineHeight = '1.15';
+        rate.style.marginTop = '12px';
+        rate.style.marginBottom = '4px';
       }
 
+      /* Date link */
+      converter.querySelectorAll('a').forEach(el => {
+        el.style.fontFamily = 'Georgia, "Times New Roman", serif';
+        el.style.fontSize = '13px';
+        el.style.fontWeight = '400';
 
+        el.style.color = '#6f6267';
 
-      /* DATE LINK */
+        el.style.textDecoration = 'none';
+        el.style.borderBottom = 'none';
 
-      converter
-        .querySelectorAll('a')
-        .forEach(el => {
-
-          el.style.fontFamily =
-            'Georgia, "Times New Roman", serif';
-
-          el.style.fontSize =
-            '13px';
-
-          el.style.color =
-            '#65585e';
-
-          el.style.textDecorationColor =
-            '#a58f98';
-
-        });
-
+        el.style.lineHeight = '1.2';
+      });
     }
 
+    window.addEventListener('load', () => {
+      applyStyles();
 
+      const observer = new MutationObserver(applyStyles);
 
-    window.addEventListener(
-      'load',
-      () => {
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true
+      });
 
-        applyStyles();
-
-        const observer =
-          new MutationObserver(
-            applyStyles
-          );
-
-        observer.observe(
-          document.body,
-          {
-            childList: true,
-            subtree: true
-          }
-        );
-
-
-        setTimeout(
-          applyStyles,
-          300
-        );
-
-        setTimeout(
-          applyStyles,
-          1000
-        );
-
-      }
-    );
-
+      setTimeout(applyStyles, 300);
+      setTimeout(applyStyles, 1000);
+      setTimeout(applyStyles, 2000);
+    });
   </script>
 
 </body>
