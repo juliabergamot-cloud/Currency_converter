@@ -16,8 +16,8 @@
     }
 
     .widget {
-      width: 190px;
-      padding: 4px 6px 0;
+      width: 210px;
+      padding: 4px 8px 0;
       box-sizing: border-box;
       background: transparent;
     }
@@ -25,11 +25,11 @@
     .title {
       text-align: center;
       color: #860038;
-      font-size: 17px;
-      font-weight: 600;
-      line-height: 1.15;
-      letter-spacing: -0.2px;
-      margin-bottom: 7px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 19px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 8px;
     }
 
     .divider {
@@ -37,12 +37,14 @@
       height: 1px;
       background: #860038;
       opacity: 0.45;
-      margin: 0 auto 11px;
+      margin: 0 auto 12px;
     }
 
     .converter {
       display: flex;
       justify-content: center;
+      min-height: 220px;
+      font-family: Georgia, "Times New Roman", serif;
     }
 
     .converter > div {
@@ -51,9 +53,23 @@
       background: transparent !important;
     }
 
-    /* hides original exchangeratewidget heading */
+    /* Hide original widget heading */
     .converter > div > div:first-child {
       display: none !important;
+    }
+
+    .converter input,
+    .converter select {
+      font-family: Georgia, "Times New Roman", serif !important;
+      font-size: 14px !important;
+      color: #2f292c !important;
+      background: #ffffff !important;
+
+      border: 1px solid #bdb5b8 !important;
+      border-radius: 5px !important;
+
+      padding: 3px 6px !important;
+      box-shadow: none !important;
     }
   </style>
 </head>
@@ -62,23 +78,223 @@
 
   <div class="widget">
 
-    <div class="title">Currency Converter</div>
+    <div class="title">Exchange Rate</div>
+
     <div class="divider"></div>
 
     <div class="converter">
 
-      <!-- Currency Converter Script - EXCHANGERATEWIDGET.COM -->
       <div style="width:178px;">
         <script
           type="text/javascript"
           src="https://www.exchangeratewidget.com/converter.php?l=en&f=USD&t=RUB&a=1&d=FFFFFF&n=FFFFFF&o=000000&v=1">
         </script>
       </div>
-      <!-- End of Currency Converter Script -->
 
     </div>
 
   </div>
+
+
+  <script>
+
+    function applyStyles() {
+
+      const converter = document.querySelector('.converter');
+
+      if (!converter) return;
+
+
+      /* Everything → Notion-like serif */
+
+      converter.querySelectorAll('*').forEach(el => {
+
+        el.style.fontFamily =
+          'Georgia, "Times New Roman", serif';
+
+      });
+
+
+
+      /* INPUTS + SELECTS */
+
+      converter.querySelectorAll('input, select').forEach(el => {
+
+        el.style.fontFamily =
+          'Georgia, "Times New Roman", serif';
+
+        el.style.fontSize = '14px';
+
+        el.style.color = '#2f292c';
+
+        el.style.border =
+          '1px solid #bdb5b8';
+
+        el.style.borderRadius =
+          '5px';
+
+        el.style.padding =
+          '3px 6px';
+
+        el.style.background =
+          '#ffffff';
+
+        el.style.boxShadow =
+          'none';
+
+      });
+
+
+
+      /* Amount / From / To */
+
+      converter
+        .querySelectorAll('div, span, td, p, label')
+        .forEach(el => {
+
+          const text =
+            el.textContent.trim();
+
+          if (
+            text === 'Amount:' ||
+            text === 'From' ||
+            text === 'To'
+          ) {
+
+            el.style.fontFamily =
+              'Georgia, "Times New Roman", serif';
+
+            el.style.fontSize =
+              '14px';
+
+            el.style.fontWeight =
+              '400';
+
+            el.style.color =
+              '#373033';
+
+          }
+
+        });
+
+
+
+      /* RATE NUMBER */
+
+      let rate = null;
+
+      let biggest = 0;
+
+
+      converter
+        .querySelectorAll(
+          'div, span, td, p, strong, b, font'
+        )
+        .forEach(el => {
+
+          const text =
+            el.textContent.trim();
+
+          if (
+            /^\d+([.,]\d+)?$/.test(text)
+          ) {
+
+            const size =
+              parseFloat(
+                getComputedStyle(el).fontSize
+              ) || 0;
+
+            if (size >= biggest) {
+
+              biggest = size;
+              rate = el;
+
+            }
+
+          }
+
+        });
+
+
+      if (rate) {
+
+        rate.style.color =
+          '#860038';
+
+        rate.style.fontFamily =
+          'Georgia, "Times New Roman", serif';
+
+        rate.style.fontSize =
+          '27px';
+
+        rate.style.fontWeight =
+          '700';
+
+        rate.style.lineHeight =
+          '1.15';
+
+      }
+
+
+
+      /* DATE LINK */
+
+      converter
+        .querySelectorAll('a')
+        .forEach(el => {
+
+          el.style.fontFamily =
+            'Georgia, "Times New Roman", serif';
+
+          el.style.fontSize =
+            '13px';
+
+          el.style.color =
+            '#65585e';
+
+          el.style.textDecorationColor =
+            '#a58f98';
+
+        });
+
+    }
+
+
+
+    window.addEventListener(
+      'load',
+      () => {
+
+        applyStyles();
+
+        const observer =
+          new MutationObserver(
+            applyStyles
+          );
+
+        observer.observe(
+          document.body,
+          {
+            childList: true,
+            subtree: true
+          }
+        );
+
+
+        setTimeout(
+          applyStyles,
+          300
+        );
+
+        setTimeout(
+          applyStyles,
+          1000
+        );
+
+      }
+    );
+
+  </script>
 
 </body>
 </html>
